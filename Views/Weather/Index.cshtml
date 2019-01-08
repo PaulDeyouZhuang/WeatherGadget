@@ -1,0 +1,383 @@
+﻿@{
+Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+    <link rel="stylesheet" href="http://icono-49d6.kxcdn.com/icono.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
+
+    <style>
+	body{
+		/*min-height: 2000px;*/
+	}
+	.background-image_main_page {
+		position: fixed;
+		background-image: url("@ViewBag.currentWeatherPictureString");
+		background-size: cover;
+		background-repeat: no-repeat;
+		display: block;
+		height: 100%;
+		left: 0;
+		right: 0;
+		z-index: 1;
+	}
+
+	.background-shadow_main_page {
+		position: fixed;
+		height: 100%;
+		left: 0;
+		right: 0;
+		box-shadow: inset 0px 50px 50px -5px rgba(0, 0, 0, 0.1), inset 0px -200px 50px -15px rgba(0, 0, 0, 0.25);
+		z-index: 2;
+	}
+
+	.main_page {
+		position: relative;
+		/*text-align: left;*/
+		left: 0;
+		color: white;
+		font-family: Microsoft JhengHei;
+		height: 100%;
+		width: 100%;
+		font-size: 48px;
+		z-index: 3;
+	}
+
+	.content_main_page {
+		position: fixed;
+		width: 100%;
+		bottom: 50px;
+		text-align: left;
+		color: white;
+		font-family: Microsoft JhengHei;
+		font-size: 48px;
+		z-index: 4;
+	}
+
+	.weather_main_page {
+		top: 20px;
+		position: relative;
+		left: 20px;
+		font-size: 22px;
+		padding-left:5px;
+		padding-bottom: 10px;
+	}
+
+	.todayTemp_main_page{
+		position: relative;
+		width: 100%;
+		left: 15px;
+		font-size: 0px;
+	}
+
+
+
+	.todayTempRange_main_page{
+		display: inline-block;
+		position: absolute;
+		bottom: 9px;
+		right: 15%;
+		font-size: 30px;
+	}
+
+	.detailed_page {
+		background: rgba(0, 0, 0, 0.5);
+		/*font-family: Microsoft JhengHei, Helvetica Neue, Helvetica, Arial, sans-serif;*/
+		font-family: Microsoft JhengHei,Arial, sans-serif;;
+		top: 0;
+		left: 0;
+		/*bottom: 0;*/
+		width: 100%;
+		height: 100%;
+		position: relative;
+		margin-left: 0px;
+		margin-right: 20px;
+		z-index: 6;
+		right: 0;
+		color: white;
+	}
+
+	.content_temp {
+		position: relative;
+		/*margin-top: 7.5%;*/
+		/*margin-bottom: 2.5%;*/
+		padding-top: 7.5%;
+		padding-bottom: 2.5%;
+	}
+
+	.todayTemp {
+		position: relative;
+		width: 100%;
+		left: 15px;
+		font-size: 0px;
+	}
+
+	.currentTemp{
+		font-size: 75px;
+	}
+
+	.degree{
+		font-size: 75px;
+	}
+
+	.tempRange {
+		display: inline-block;
+		position: absolute;
+		bottom: 9px;
+		right: 12.5%;
+		font-size: 30px;
+	}
+
+	.secondPart {
+		background: rgba(0, 0, 0, 0.5);
+		padding-top: 15px;
+		/*bottom: 2px;*/
+		/*position: absolute;*/
+		z-index: 7;
+		width: 100%;
+		height: 700px;
+
+	}
+
+	#dateTime {
+		margin-left: 20px;
+	}
+
+	#warning {
+		text-align: center;
+		margin-top: 20px;
+		padding-bottom: 20px;
+		font-size: @ViewBag.minTemp_todaypx;
+		vertical-align: middle;
+		box-shadow: 0 1px 0px rgba(255, 255, 255, 0.5);
+	}
+
+	.weatherItemsAndValuesAndDescription{
+		margin-top: 5px;
+		padding-bottom: 20px;
+		box-shadow: 0 1px 0px rgba(255, 255, 255, 0.5);
+	}
+
+	.weatherItemsEachRow {
+		padding: 20px 0 0 20px;
+	}
+
+	.weatherItems {
+		font-size: 20px;
+		/*top: 10px;*/
+		position: relative;
+		/*position: absolute;*/
+	}
+
+	.weatherValues {
+		font-size: 20px;
+		/*position: absolute;*/
+		/*margin-top: 12px;*/
+		left: 32.5%;
+		position: absolute;
+	}
+
+	.weatherDescriptions {
+		font-size: 16px;
+		position: absolute;
+		left: 47.5%;
+		margin-top: 5px;
+	}
+	.weatherPrediction {
+		margin-top: 5px;
+				font-size: 20px;
+	}
+	.weatherPredictionDayEachRow{
+		padding: 20px 0 0 20px;
+
+	}
+	.weatherPrediction_date{
+		/*font-size: 20px;*/
+		/*top: 10px;*/
+		position: relative;
+	}
+	.weatherPrediction_weather{
+		/*font-size: 20px;*/
+		position: absolute;
+		/*margin-top: 12px;*/
+		left: 17.5%;
+	}
+	.weatherPrediction_tempRange{
+		position: absolute;
+		left:72%;
+	}
+
+	.pop_indication{
+		font-size: 	10px;
+	}
+
+.icon-bar {
+    width: 100%;
+    background-color: #555;
+    overflow: auto;
+}
+
+.icon-bar i {
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 36px;
+    z-index:5 ;
+}
+   .icon-bar a {
+    float: left;
+    width: 20%;
+    text-align: center;
+    padding: 12px 0;
+    transition: all 0.3s ease;
+    color: white;
+    font-size: 36px;
+    z-index:5 ;
+}
+
+
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="background-image_main_page"></div>
+        <div id="MP" class="main_page">
+            <div class="background-shadow_main_page"></div>
+            <i class="icono-plus" style="font-size: 40px; font-weight:bold; position: fixed; left: 10px; top:10px; z-index:5;"></i>
+
+
+            <div class="content_main_page">
+                <div class="weather_main_page">
+                    <i class="@ViewBag.currentWeatherCodeString"></i>&nbsp;@ViewBag.currentWeather
+                </div>
+                <div class="todayTemp_main_page">
+                    <span class="currentTemp">@ViewBag.currentTemp</span>
+                    <span class="degree">°</span>
+                    <span style="font-size: 34px;">C</span>
+                    <div class="todayTempRange_main_page">@ViewBag.minTemp_today - @ViewBag.maxTemp_today</div>
+                </div>
+
+
+            </div>
+        </div>
+        <div id="DP" class="detailed_page" style="display:none;">           
+            <div class="content_temp">
+                <span style="font-size: 22px; padding:15px">
+                    <i class="@ViewBag.currentWeatherCodeString"></i>&nbsp;@ViewBag.currentWeather
+                </span>
+                <div class="todayTemp">
+                    <span class="currentTemp">@ViewBag.currentTemp</span>
+                    <span class="degree">°</span>
+                    <span style="font-size: 34px;">C</span>
+                    <div class="tempRange">@ViewBag.minTemp_today - @ViewBag.maxTemp_today</div>
+                </div>
+            </div>
+
+            <div class="secondPart">
+                <div class="timeAndWarning">
+                    <div id="dateTime"><span style="font-size: 22px;">@ViewBag.currentTime</span></div>
+                    <div id="warning"><!-- <span style="font-size: @ViewBag.minTemp_todaypx; vertical-align: middle;"> -->@ViewBag.cautionStatement<!-- </span> --></div>
+                </div>
+                <div class="weatherItemsAndValuesAndDescription">
+                    <div class="weatherItemsEachRow">
+                        <span class="weatherItems">降雨機率</span>
+                        <span class="weatherValues">
+                            <span class="pop">@ViewBag.pop_today_day%</span>
+                            <span class="pop_indication">(日)</span>
+                            &nbsp;/&nbsp;
+                            <span class="pop">@ViewBag.pop_today_night%</span>
+                            <span class="pop_indication">(夜)</span>
+                        </span>
+                    </div>
+                    <div class="weatherItemsEachRow">
+                        <span class="weatherItems">濕度</span><span class="weatherValues"><!-- <span style="font-size: 32px;"> -->@ViewBag.currentHumd%</span><span class="weatherDescriptions">@ViewBag.currentHumdMeaning</span><!-- </span> -->
+                    </div>
+                    <div class="weatherItemsEachRow">
+                        <span class="weatherItems">UVI</span><span class="weatherValues"><!-- <span style="font-size: 32px;"> -->@ViewBag.uvi_today</span><span class="weatherDescriptions">@ViewBag.uvi_today_meaning</span><!-- </span> -->
+                    </div>
+                    <div class="weatherItemsEachRow">
+                        <span class="weatherItems">AQI</span><span class="weatherValues"><!-- <span style="font-size: 32px;"> -->@ViewBag.currentAqi</span><span class="weatherDescriptions">@ViewBag.currentAqiMeaning</span><!-- </span> -->
+                    </div>
+                </div>
+                <div class="weatherPrediction">
+
+                    <div class="weatherPredictionDayEachRow">
+                        <span class="weatherPrediction_date">@ViewBag.date_plus1</span>
+
+                        <span class="weatherPrediction_weather"><i class="@ViewBag.weatherCodeString_plus1"></i>&nbsp; @ViewBag.weather_plus1</span>
+                        <span class="weatherPrediction_tempRange">@ViewBag.minTemp_plus1 - @ViewBag.maxTemp_plus1</span><!-- </span> -->
+                    </div>
+
+                    <div class="weatherPredictionDayEachRow">
+                        <span class="weatherPrediction_date">@ViewBag.date_plus2</span>
+
+                        <span class="weatherPrediction_weather"><i class="@ViewBag.weatherCodeString_plus2"></i>&nbsp; @ViewBag.weather_plus2</span>
+                        <span class="weatherPrediction_tempRange">@ViewBag.minTemp_plus2 - @ViewBag.maxTemp_plus2</span><!-- </span> -->
+                    </div>
+
+                    <div class="weatherPredictionDayEachRow">
+                        <span class="weatherPrediction_date">@ViewBag.date_plus3</span>
+
+                        <span class="weatherPrediction_weather"><i class="@ViewBag.weatherCodeString_plus3"></i>&nbsp; @ViewBag.weather_plus3</span>
+                        <span class="weatherPrediction_tempRange">@ViewBag.minTemp_plus3 - @ViewBag.maxTemp_plus3</span><!-- </span> -->
+                    </div>
+
+                    <div class="weatherPredictionDayEachRow">
+                        <span class="weatherPrediction_date">@ViewBag.date_plus4</span>
+
+                        <span class="weatherPrediction_weather"><i class="@ViewBag.weatherCodeString_plus4"></i>&nbsp; @ViewBag.weather_plus4</span>
+                        <span class="weatherPrediction_tempRange">@ViewBag.minTemp_plus4 - @ViewBag.maxTemp_plus4</span><!-- </span> -->
+                    </div>
+
+                    <div class="weatherPredictionDayEachRow">
+                        <span class="weatherPrediction_date">@ViewBag.date_plus5</span>
+
+                        <span class="weatherPrediction_weather"><i class="@ViewBag.weatherCodeString_plus5"></i>&nbsp; @ViewBag.weather_plus5</span>
+                        <span class="weatherPrediction_tempRange">@ViewBag.minTemp_plus5 - @ViewBag.maxTemp_plus5</span><!-- </span> -->
+                    </div>
+
+                    <div class="weatherPredictionDayEachRow">
+                        <span class="weatherPrediction_date">@ViewBag.date_plus6</span>
+
+                        <span class="weatherPrediction_weather"><i class="@ViewBag.weatherCodeString_plus6"></i>&nbsp; @ViewBag.weather_plus6</span>
+                        <span class="weatherPrediction_tempRange">@ViewBag.minTemp_plus6 - @ViewBag.maxTemp_plus6</span><!-- </span> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        $(".main_page").on("click", function () {
+                $(".main_page").fadeOut();
+                $("#DP").fadeIn();
+
+        });
+        $(".detailed_page").on("click", function () {
+                $("#DP").fadeOut();
+                $(".main_page").fadeIn();
+        });
+    </script>
+
+</body>
+
+</html>
